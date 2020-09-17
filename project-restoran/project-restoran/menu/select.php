@@ -25,7 +25,7 @@
 </div>
 <?php
     $jumlahdata=$db->rowCount('SELECT idmenu FROM menu');
-    $banyak=4;
+    $banyak=3;
     if (isset($_GET['menu'])) {
         $menu=$_GET['menu'];
         $mulai =($menu*$banyak)-$banyak;
@@ -45,6 +45,7 @@
             <th>No</th>
             <th>Gambar</th>
             <th>Menu</th>
+            <th>Harga</th>
             <th colspan="2" class="text-center">Aksi</th>
         </tr>
     </thead>
@@ -55,9 +56,10 @@
             <td><?= $no++; ?></td>
             <td><img style="width: 100px;" src="../img/<?=$rows['gambar']?>"></td>
             <td><?=$rows["menu"]?></td>
+            <td><?=$rows["harga"]?></td>
              <td><a href="?f=menu&m=hapus&id=<?=$rows['idmenu']?>">hapus</a></td>
            <td><a href="?f=menu&m=ubah&id=<?=$rows['idmenu']?>">Ubah</a></td> 
-            
+           
         </tr>
         <?php endforeach; ?>
         <?php endif ?>
