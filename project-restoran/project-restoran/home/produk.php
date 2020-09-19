@@ -1,4 +1,3 @@
-
 <h3>Menu</h3>
 <div class="mt-4 mb-4">
     <?php 
@@ -34,8 +33,8 @@
         <img style="height:220px" src="img/<?=$rows['gambar']?>" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title"><?=$rows["menu"]?></h5>
-        <p class="card-text"><?=$rows["harga"]?></p>
-        <a class="btn btn-primary" href="?f=kategori&m=insert" role="button">Add to cart</a>
+        <p class="card-text"><?=$rows["harga"]?></p>    
+        <a class="btn btn-primary" href="?f=home&m=beli&id=<?=$rows['idmenu']?>" role="button">Add to cart</a>
   </div>
 </div>
 
