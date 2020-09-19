@@ -76,6 +76,3 @@
         </tr>
         </table>
   <?php   }?>
-
-<a href="#"></a>
-<h3>Yahya Alfon Sinaga</h3>
