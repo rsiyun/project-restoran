@@ -2,6 +2,7 @@
     if (isset($_GET['hapus'])) {
         $id=$_GET['hapus'];
         unset($_SESSION['_'.$id]);
+        header('location:?f=home&m=beli');
     }
     if (isset($_GET['tambah'])) {
         $id=$_GET['tambah'];
@@ -12,6 +13,7 @@
         $_SESSION['_'.$id]--;
         if ($_SESSION['_'.$id]==0) {
             unset($_SESSION['_'.$id]);
+            header('location:?f=home&m=beli');
         }
     }
     if (!isset($_SESSION['pelanggan'])) {
@@ -24,13 +26,8 @@
     }else{
         keranjang();
     }
+    
 }
-
-
-
-
-
-
     function isi($id){
         if (isset($_SESSION['_'.$id])) {
             $_SESSION['_'.$id]++;
@@ -42,6 +39,7 @@
     <?php  function keranjang(){?>
     <?php global $db;
         $total=0;
+        global $total;
     ?>
         <table class="table table-bordered table-dark w-70">
         <tr>
@@ -75,4 +73,7 @@
             <td><h6><?=$total?></h6></td>
         </tr>
         </table>
-  <?php   }?>
+        <?php 
+            if (!empty($total)) {?>
+            <a class="btn btn-primary" href="?f=home&m=checkout&total=<?=$total?>" role="button">Add to cart</a>
+           <?php  }} ?>    

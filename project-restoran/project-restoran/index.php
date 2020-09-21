@@ -8,6 +8,22 @@
         session_destroy();
         header("location:index.php");
     }
+    function cart(){
+        global $db;
+        $cart=0;
+    foreach ($_SESSION as $key => $value) {
+        if ($key<>'pelanggan'&& $key<>'idpelanggan') {
+            $id=substr($key,1);
+            $sql="SELECT * FROM menu WHERE idmenu=$id";
+            $rows=$db->getAll($sql);
+            foreach($rows as $row){
+                $cart++;
+            }
+
+        }
+    }
+    return $cart;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +45,8 @@
             if (isset($_SESSION['pelanggan'])) {
                 echo '<div class="float-right mt-4"><a href="?logout=logout">Logout</a></div>
                 <div class="float-right mr-4 mt-4">Pelanggan: <a href="?f=home&m=beli">'.$_SESSION['pelanggan'].'</a></div>
+                <div class="float-right mr-4 mt-4">Cart: (<a href="?f=home&m=beli">'.cart().'</a>)</div>
+                <div class="float-right mr-4 mt-4"><a href="?f=home&m=histori">Histori Belanja</a></div>
                 ';
                 
               }
