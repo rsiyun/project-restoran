@@ -40,7 +40,7 @@ function insertOrder($idorder,$idpelanggan,$tgl,$total){
 function insertOrderDetail($idorder=1){
     global $db;
     foreach ($_SESSION as $key => $value) {
-        if ($key<>'pelanggan'&& $key<>'idpelanggan') {
+        if ($key<>'pelanggan'&& $key<>'idpelanggan'&& $key<>'user'&& $key<>'level' && $key<>'iduser') {
             $id=substr($key,1);
             $sql="SELECT * FROM menu WHERE idmenu=$id";
             $rows=$db->getAll($sql);

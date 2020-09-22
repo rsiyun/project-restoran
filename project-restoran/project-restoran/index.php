@@ -12,14 +12,13 @@
         global $db;
         $cart=0;
     foreach ($_SESSION as $key => $value) {
-        if ($key<>'pelanggan'&& $key<>'idpelanggan') {
+        if ($key<>'pelanggan'&& $key<>'idpelanggan'&& $key<>'user'&& $key<>'level' && $key<>'iduser') {
             $id=substr($key,1);
             $sql="SELECT * FROM menu WHERE idmenu=$id";
             $rows=$db->getAll($sql);
             foreach($rows as $row){
                 $cart++;
             }
-
         }
     }
     return $cart;

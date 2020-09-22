@@ -31,8 +31,8 @@
     if (isset($_POST['tombol'])) {
         $user=strtolower(stripslashes($_POST['username']));
         $email=$_POST['email'];
-        $password=$_POST['password'];
-        $konfirmasi=$_POST['konfirmasi'];
+        $password=hash('ripemd160',$_POST['password']);
+        $konfirmasi=hash('ripemd160',$_POST['konfirmasi']);
         $level=$_POST['opsi'];      
         if ($password===$konfirmasi) {
             $password=password_hash($password,PASSWORD_DEFAULT);
