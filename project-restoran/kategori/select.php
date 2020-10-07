@@ -1,67 +1,56 @@
-<div style="margin:auto; width:990px;">
-<h3><a href="insert.php">Tambah data</a></h3>
-<?php 
-    require_once "../function.php";
-    if (isset($_GET['ubah'])) {
-        $id=$_GET['ubah'];
-        require_once "update.php";
-    }
-    if (isset($_GET['hapus'])) {
-        $id=$_GET['hapus'];
-        require_once "delete.php";
-    }
-    $sql = "SELECT idkategori FROM kategori";
-    $result = mysqli_query($conn,$sql);
-    $jumlahdata=mysqli_num_rows($result);
-    //echo $jumlahdata;
-    $banyak=3;
-    $halaman= ceil($jumlahdata/$banyak) ;
-    ?>
-    <?php for ($a=1; $a <= $halaman; $a++): ?> 
-        <a href="?menu=<?=$a?>"><?=$a;?></a>
-        &nbsp &nbsp     
-    <?php  endfor; ?> 
-    <br> <br>
-    <?php
+<?php
 
-    if (isset($_GET['menu'])) {
-        $menu=$_GET['menu'];
-        $mulai =($menu*$banyak)-$banyak;
-        
+$jumlahdata = $db->rowCOUNT("SELECT idkategori FROM tblkategori");
+$banyak = 4;
 
-    }else {
-        $mulai=0;
-    }
-    $sql = "SELECT * FROM kategori LIMIT $mulai,$banyak";
-    $result = mysqli_query($conn,$sql);
-    echo '
-<table border="1px">
-    <tr>
-        <th>No</th>
-        <th>Aksi</th>
-        <th>kategori</th>
-        
-        
-    </tr>';
-    $a=1;
-$jumlah = mysqli_num_rows($result);
-$no=$mulai+1;
+$halaman = ceil($jumlahdata / $banyak);
+
+if (isset($_GET['p'])) {
+    $p = $_GET['p'];
+    $mulai = ($p * $banyak) - $banyak;
+} else {
+    $mulai = 0;
+}
+
+
+$sql = "SELECT * FROM tblkategori ORDER BY kategori ASC LIMIT $mulai,$banyak";
+$row = $db->getALL($sql);
+
+$no = 1 + $mulai;
+
 ?>
-<?php  if ($jumlah>0) :?>
-    <?php  while ($row=mysqli_fetch_assoc($result)):  ?>
-     <tr>
-       <td> <?=$no++;?> </td> 
-       <td>
-            <a href="?ubah=<?=$row['idkategori']?>">ubah</a> |
-            | <a href="?hapus=<?=$row['idkategori']?>">hapus</a>
-        </td>
-         <td><?=$row['kategori']?></td>
-         
-     </tr>
-      
-   <?php   endwhile;?>
- <?php  endif; ?>
 
+<div class="float-left mr-3 ">
 
+    <a class="btn btn-primary" href="?f=kategori&m=insert" role="button">Tambah Data</a>
 
 </div>
+<h3> Kategori </h3>
+
+<table class="table table-bordered table-dark w-50">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Kategori</th>
+            <th>Hapus</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($row)) { ?>
+            <?php foreach ($row as $r) : ?>
+                <tr>
+                    <td><?php echo $no++ ?></td>
+                    <td><?php echo $r['kategori'] ?></td>
+                    <td><a href="?f=kategori&m=delete&id=<?php echo $r['idkategori'] ?>">Hapus</a></td>
+                    <td><a href="?f=kategori&m=update&id=<?php echo $r['idkategori'] ?>">Update</a></td>
+                </tr>
+            <?php endforeach ?>
+        <?php } ?>
+    </tbody>
+</table>
+
+<?php for ($i = 1; $i <= $halaman; $i++) : ?>
+    <a href="?f=kategori&m=select&p=<?= $i ?>"><?= $i; ?></a>
+    &nbsp &nbsp
+<?php endfor; ?>
